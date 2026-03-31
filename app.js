@@ -31,7 +31,6 @@ app.get('/todos/:id', (req, res) => {
 
 // 4. TASK: POST New with Validation
 app.post('/todos', (req, res) => {
-  // Check if "task" field exists in the request body
   if (!req.body.task) {
     return res.status(400).json({ error: 'Validation failed: "task" field is required' });
   }
@@ -46,7 +45,7 @@ app.post('/todos', (req, res) => {
   res.status(201).json(newTodo);
 });
 
-// 5. PATCH Update – Partial
+// 5. PATCH Update
 app.patch('/todos/:id', (req, res) => {
   const todo = todos.find((t) => t.id === parseInt(req.params.id));
   if (!todo) return res.status(404).json({ message: 'Todo not found' });
@@ -55,13 +54,11 @@ app.patch('/todos/:id', (req, res) => {
   res.status(200).json(todo);
 });
 
-// 6. DELETE Remove
+// 6. DELETE
 app.delete('/todos/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const exists = todos.find(t => t.id === id);
-  
   if (!exists) return res.status(404).json({ error: 'Not found' });
-  
   todos = todos.filter((t) => t.id !== id);
   res.status(204).send(); 
 });
